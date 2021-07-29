@@ -20,12 +20,7 @@ router.post("/create", function (req, res) {
       });
     })
     .catch((err) => res.status(500).json({ error: err }));
-
-  // let userModel = {
-  //   email: req.body.user.email,
-  //   password: req.body.user.password,
-  // };
-  // User.create(userModel).then(res.send("This is our user/create endpoint"));
+  
 });
 
 router.post("/login", function (req, res) {
