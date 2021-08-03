@@ -3,19 +3,22 @@ const User = require("../db").import("../models/user");
 
 const validateSession = (req, res, next) => {
   const token = req.headers.authorization;
-
+console.log('token --> ', token)
   if (!token) {
     return res.status(403).send({ auth: false, message: "No token provided" });
   } else {
     jwt.verify(token, process.env.JWT_SECRET, (err, decodeToken) => {
+      console.log('decodeToken --> ', decodeToken)
       if (!err && decodeToken) {
         User.findOne({
           where: {
             id: decodeToken.id,
           },
         })
-          .then((user) => {
+          .then(user => {
+            console.log('user --> ', user)
             if (!user) throw err;
+            console.log('user --> ', req)
             req.user = user;
             return next();
           })
@@ -27,3 +30,5 @@ const validateSession = (req, res, next) => {
     });
   }
 };
+
+module.exports = validateSession
